@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>For Afrin ❤️</title>
+    <style>
+        body { margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(to bottom, #ffbd59, #ff5e78); font-family: sans-serif; text-align: center; color: white; overflow: hidden; }
+        .container { z-index: 10; }
+        h1 { font-size: 2rem; }
+        button { padding: 15px 30px; font-size: 1.2rem; cursor: pointer; border: none; border-radius: 20px; margin: 10px; transition: 0.2s; }
+        #yes-btn { background: white; color: #ff5e78; }
+        #no-btn { background: #ffbd59; color: white; position: absolute; }
+        #result { display: none; }
+        img { width: 250px; height: 250px; border-radius: 50%; border: 5px solid white; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-content">
+        <h1>Will you forever be mine, Afrin? ❤️</h1>
+        <button id="yes-btn" onclick="document.getElementById('main-content').style.display='none'; document.getElementById('result').style.display='block';">Yes 💞</button>
+        <button id="no-btn" onmouseover="this.style.left=(Math.random()*80)+'%'; this.style.top=(Math.random()*80)+'%';">No 😏</button>
+    </div>
+
+    <div id="result">
+        <h2>Yay! I knew you'd say YES! ❤️</h2>
+        <img src="https://i.ibb.co/L5k6v7W/cat.jpg" alt="Cute Cat">
+        <p>You're the most amazing person I know. I love you endlessly. 💖</p>
+    </div>
+
+</body>
+</html>
