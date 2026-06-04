@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome Link - Open in Chrome</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .chrome-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #4285f4, #34a853, #fbbc04, #ea4335);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-create {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            color: white;
+        }
+        
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(66, 133, 244, 0.3);
+        }
+        
+        .btn-copy {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-copy:hover {
+            background: #e0e0e0;
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+            display: none;
+        }
+        
+        .result-section.active {
+            display: block;
+        }
+        
+        .result-label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .result-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-bottom: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .success-message {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #4285f4;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #1565c0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="chrome-logo">🔗</div>
+            <h1>Chrome Link Generator</h1>
+            <p class="subtitle">Convert your HTML file into a Chrome-compatible link</p>
+        </div>
+        
+        <div class="info-box">
+            💡 <strong>Tip:</strong> You can paste your HTML code below and generate a clickable Chrome link. Choose either Data URL (inline) or Base64 encoding format.
+        </div>
+        
+        <div class="input-group">
+            <label for="htmlInput">Paste your HTML code:</label>
+            <textarea id="htmlInput" placeholder="Paste your index.html code here..."></textarea>
+        </div>
+        
+        <div class="input-group">
+            <label for="linkName">Link Name (optional):</label>
+            <input type="text" id="linkName" placeholder="e.g., My Awesome Page">
+        </div>
+        
+        <div class="input-group">
+            <label>Encoding Method:</label>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <label style="display: flex; align-items: center; flex: 1; margin: 0; cursor: pointer;">
+                    <input type="radio" name="encoding" value="dataurl" checked> Data URL (Recommended)
+                </label>
+                <label style="display: flex; align-items: center; flex: 1; margin: 0; cursor: pointer;">
+                    <input type="radio" name="encoding" value="base64"> Base64
+                </label>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-create" onclick="generateLink()">🔗 Generate Chrome Link</button>
+            <button class="btn-copy" onclick="copyToClipboard()">📋 Copy Link</button>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <div class="result-label">Generated Chrome Link:</div>
+            <div class="result-box" id="resultBox"></div>
+            <div class="success-message">✓ Link generated successfully! Click 'Copy Link' to copy it to your clipboard.</div>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                <p style="color: #666; font-size: 13px; margin-bottom: 10px;"><strong>How to use:</strong></p>
+                <ul style="color: #666; font-size: 13px; line-height: 1.8; margin-left: 20px;">
+                    <li>Copy the generated link above</li>
+                    <li>Open Chrome browser</li>
+                    <li>Paste the link in the address bar and press Enter</li>
+                    <li>Your HTML page will open directly in Chrome!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let generatedLink = '';
+        
+        function generateLink() {
+            const htmlInput = document.getElementById('htmlInput').value.trim();
+            const linkName = document.getElementById('linkName').value || 'My Page';
+            const encoding = document.querySelector('input[name="encoding"]:checked').value;
+            
+            if (!htmlInput) {
+                alert('Please paste your HTML code first!');
+                return;
+            }
+            
+            try {
+                let link;
+                
+                if (encoding === 'dataurl') {
+                    // Data URL method (works directly in Chrome address bar)
+                    link = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlInput);
+                } else {
+                    // Base64 method
+                    const base64 = btoa(unescape(encodeURIComponent(htmlInput)));
+                    link = 'data:text/html;base64,' + base64;
+                }
+                
+                generatedLink = link;
+                
+                const resultBox = document.getElementById('resultBox');
+                resultBox.textContent = link;
+                
+                const resultSection = document.getElementById('resultSection');
+                resultSection.classList.add('active');
+                
+                // Scroll to result
+                resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+            } catch (error) {
+                alert('Error generating link: ' + error.message);
+            }
+        }
+        
+        function copyToClipboard() {
+            if (!generatedLink) {
+                alert('Please generate a link first!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(generatedLink).then(() => {
+                alert('✓ Chrome link copied to clipboard!');
+            }).catch(err => {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = generatedLink;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('✓ Chrome link copied to clipboard!');
+            });
+        }
+        
+        // Allow Enter key in textarea to generate link
+        document.getElementById('htmlInput').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                generateLink();
+            }
+        });
+    </script>
+</body>
+</html>
